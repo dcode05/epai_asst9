@@ -6,9 +6,9 @@ Uploads: Colab notebook .ipynb files separately for each question1, 2 and 3: wit
     Namedtuple: 14.056909721000011 sec
     Dict: 15.485492480000175 sec
   
-# Explanation of each of the 3 solutions:
+#Explanation of each of the 3 solutions:
 
-1. Use the Faker library to get 10000 random profiles. Using namedtuple, calculate the largest blood type, mean-current_location, oldest_person_age, and average age
+# Solution 1. Use the Faker library to get 10000 random profiles. Using namedtuple, calculate the largest blood type, mean-current_location, oldest_person_age, and average age
 
   # Solution steps:
         step1 - create a namedtuple field
@@ -89,3 +89,68 @@ Uploads: Colab notebook .ipynb files separately for each question1, 2 and 3: wit
         mean_location= sum(t[0] for t in current_location)/profile_count, sum(t[1] for t in current_location)/profile_count
         print('mean_location is ', mean_location)        
 
+# -----------------------------------------------------------------------------------------------------------------------------
+# Solution 2:  
+  
+  # STEP1: IMPORTING & STORING PROFILTES IN A DICT
+        from time import perf_counter
+        start= perf_counter()
+        Faker.seed(0)
+        fake = Faker()
+        fp={}                            # declared a dic
+        profile_count=10_000
+        for i in range(profile_count):
+          fp[i]=fake.profile()           # output dict- stores all profiles 
+        
+  # STEP2: creating a new list of bloodtypes
+  
+        blood_group_list=list()                                 # list decleration              
+        for i in range(profile_count):                        
+          blood_group_list.append(fp[i]["blood_group"])          # all the blood groups stored here
+
+        # print(blood_group_list) 
+
+
+  # STEP3: CALCULATION OF LARGEST BLOOD TYPE
+        
+        def most_frequent(List):
+            return max(set(List), key = List.count)
+
+        most_frequent(blood_group_list)                 # gives the boodtype which occurs most frequently
+
+# STEP: 4 : creating a new list of mean location and using sum() and list comprehension to calculate the mean location of profiles
+
+        current_location_list=list()                               # list decleration 
+        for i in range(profile_count):                        
+            current_location_list.append(fp[i]["current_location"])          # all the mean location  stored here
+
+        print(current_location_list)
+        mean_location= sum(t[0] for t in current_location_list)/profile_count, sum(t[1] for t in current_location_list)/profile_count
+        mean_location
+
+
+# STEP: 5: oldest_person_age
+
+        birthdate_list=list()                              # list decleration 
+        for i in range(profile_count):                        
+          birthdate_list.append(fp[i]["birthdate"])          # all the bithdates stored here
+
+        print(birthdate_list)
+        import datetime
+
+        oldest=min( birthdate_list )
+        age_oldest= datetime.date.today() - oldest 
+        index_oldest=birthdate_list.index(oldest)
+
+        print(oldest)
+        print(age_oldest)
+        print(index_oldest)
+
+        
+# STEP: 6: average age calc
+        age=  [ datetime.date.today()-t for t in birthdate_list ]         # calculates age of each member in the profile
+        age_total= age[0]
+        for i in range(profile_count-1):
+          age_total+= age[i+1]
+        age_average= age_total/ len(age)  
+        print(age_average)
