@@ -6,9 +6,9 @@ Execution time differece:
   Namedtuple: 14.056909721000011 sec
   Dict: 15.485492480000175 sec
   
-Explanation of each of the 3 solutions:
+# Explanation of each of the 3 solutions:
 
-1: Use the Faker library to get 10000 random profiles. Using namedtuple, calculate the largest blood type, mean-current_location, oldest_person_age, and average age
+**1:** Use the Faker library to get 10000 random profiles. Using namedtuple, calculate the largest blood type, mean-current_location, oldest_person_age, and average age
 
   Solution steps:
         step1 - create a namedtuple field
